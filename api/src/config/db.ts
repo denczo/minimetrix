@@ -33,7 +33,7 @@ client.connect()
 
 const init = async () => {
     let result = await query(` 
-            CREATE TABLE IF NOT EXISTS sensor_data (
+            CREATE TABLE IF NOT EXISTS`+ process.env.DB_TABLE +`(
                 time TIMESTAMPTZ NOT NULL DEFAULT now(),
                 temperature FLOAT NOT NULL,
                 humidity FLOAT NOT NULL
@@ -41,7 +41,7 @@ const init = async () => {
     
     console.log('Created table', result)
 
-    result = await query("SELECT create_hypertable('sensor_data', 'time')")
+    result = await query(`SELECT create_hypertable('`+ process.env.DB_TABLE +`', 'time', if_not_exists => TRUE)`)
     console.log('Created hypertable', result)
 }
 
