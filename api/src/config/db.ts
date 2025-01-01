@@ -33,7 +33,7 @@ client.connect()
 
 const init = async () => {
     let result = await query(` 
-            CREATE TABLE IF NOT EXISTS`+ process.env.DB_TABLE +`(
+            CREATE TABLE IF NOT EXISTS `+ process.env.DB_TABLE +` (
                 time TIMESTAMPTZ NOT NULL DEFAULT now(),
                 temperature FLOAT NOT NULL,
                 humidity FLOAT NOT NULL
