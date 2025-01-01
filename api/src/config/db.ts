@@ -32,17 +32,17 @@ client.connect()
     });
 
 const init = async () => {
-    const result = await query(` 
-        IF NOT EXISTS (
-            SELECT FROM information_schema.tables 
-            WHERE table_schema = 'public' 
-            AND table_name = 'sensor_data') THEN
-        CREATE TABLE sensor_data (
-            time TIMESTAMPTZ NOT NULL,
-            temperature FLOAT NOT NULL,
-            humidity FLOAT NOT NULL);
-        END IF;`)
-    console.log('Executed init query', result)
+    let result = await query(` 
+            CREATE TABLE IF NOT EXISTS sensor_data (
+                time TIMESTAMPTZ NOT NULL DEFAULT now(),
+                temperature FLOAT NOT NULL,
+                humidity FLOAT NOT NULL
+            );`)
+    
+    console.log('Created table', result)
+
+    result = await query("SELECT create_hypertable('sensor_data', 'time')")
+    console.log('Created hypertable', result)
 }
 
 export const query = (statement: string, params?: any[]) => {
