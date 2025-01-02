@@ -3,15 +3,19 @@ import paho.mqtt.client as mqtt
 import Adafruit_DHT
 import random
 import json
+import os
+from dotenv import load_dotenv
 
+# Load env variables
+load_dotenv()
 # Set up the DHT sensor and the GPIO pin
 DHT_SENSOR = Adafruit_DHT.DHT11
 DHT_PIN = 4
 
 # MQTT Setup
-hostname = "49.13.74.176"  # MQTT broker IP
-broker_port = 1883
-topic = "mqtt/rpi"
+hostname = os.getenv("MQTT_HOST")  # MQTT broker IP
+broker_port = os.getenv("MQTT_PORT")
+topic = os.getenv("MQTT_TOPIC")
 client = mqtt.Client()
 
 # Define on_connect and on_message callbacks

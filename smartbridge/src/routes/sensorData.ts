@@ -17,8 +17,6 @@ const client = mqtt.connect(connectUrl, {
     clientId,
     clean: true,
     connectTimeout: 4000,
-    // username: 'emqx',
-    // password: 'public',
     reconnectPeriod: 1000,
 })
 
@@ -33,7 +31,7 @@ client.on('connect', () => {
 client.on('message', async (topic: any, payload: any) => {
     console.log('Received Message:', topic, payload.toString())
     sensorData = JSON.parse(payload.toString())
-    const result = await query("INSERT INTO sensor_data (time, temperature, humidity) VALUES (NOW(), $1, $2);", [sensorData.temperature, sensorData.humidity])
+    const result = await query("INSERT INTO "+ process.env.DB_TABLE +" (time, temperature, humidity) VALUES (NOW(), $1, $2);", [sensorData.temperature, sensorData.humidity])
     console.log("Query result ", JSON.stringify(result))
 })
 

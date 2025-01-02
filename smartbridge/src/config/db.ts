@@ -7,18 +7,9 @@ export const client = new Client({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     user: process.env.DB_USER,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE,
+    password: process.env.DB_PWD,
+    database: process.env.DB_NAME,
 })
-
-client.on('connect', () => {
-    console.log('Connected to TimescaleDB');
-});
-
-client.on('error', (err: any) => {
-    console.error('Unexpected error on idle client', err);
-    process.exit(-1);
-});
 
 client.connect()
     .then(() => {
