@@ -27,3 +27,4 @@ raspi_temp_humpidity.py reads temperatur and humidity from a DHT11 sensor which 
 
 - integrate monitoring of SmartSocket
 - REST API to add new IOT devices easily
+- extend Pi Zero with additional sensors (goal: independent Weather station)
