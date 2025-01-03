@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import sensorData from './routes/sensorData';
 
 const app = express();
-const port = process.env.APP_PORT || 3000;
+const port = process.env.NODE_PORT;
 
 app.use(express.json());
 app.use('/sensorData', sensorData);
