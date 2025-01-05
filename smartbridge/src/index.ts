@@ -8,7 +8,12 @@ app.use(express.json());
 app.use('/sensorData', sensorData);
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Microservice: SmartBridge');
+  res.send({'Microservice: SmartBridge': {
+    "PORT": process.env.NODE_PORT,
+    "MQTT HOST": process.env.MQTT_HOST,
+    "MQTT PORT": process.env.MQTT_PORT,
+    "MQTT TOPIC": process.env.MQTT_TOPIC,
+  }});
 });
 
 app.listen(port, () => {
