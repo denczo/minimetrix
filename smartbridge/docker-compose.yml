@@ -28,7 +28,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PWD}
       POSTGRES_DB: ${DB_NAME}
     volumes:
-      - ../timescaledb-data:/var/lib/postgresql/data # Persistent storage
+      - /root/minimetrix/timescaledb-data:/var/lib/postgresql/data # Persistent storage
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
       interval: 10s
@@ -43,25 +43,26 @@ services:
     ports:
       - "${GRAFANA_PORT}:${GRAFANA_PORT}" # Grafana web interface
     environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      GF_SECURITY_ADMIN_USER: ${GF_USER}
+      GF_SECURITY_ADMIN_PASSWORD: ${GF_PWD}
     depends_on:
       timescaledb:
         condition: service_healthy
     volumes:
-      - ../grafana-data:/var/lib/grafana/
+      - /root/minimetrix/grafana-data:/var/lib/grafana/
 
   mosquitto:
     image: eclipse-mosquitto
     container_name: mosquitto
+    restart: unless-stopped
     ports:
       - "1883:1883"
-    healthcheck:
-      test: curl -f http://localhost:1883
-      interval: 10s
-      timeout: 5s
-      retries: 5
+    volumes:
+      - /root/minimetrix/mosquitto/config:/mosquitto/config
+      - /root/minimetrix/mosquitto/data:/mosquitto/data
+      - /root/minimetrix/mosquitto/log:/mosquitto/log
 
 volumes:
   grafana-data:
   timescaledb:
+  mosquitto:

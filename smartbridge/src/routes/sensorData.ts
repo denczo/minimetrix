@@ -28,6 +28,10 @@ client.on('connect', () => {
     })
 })
 
+client.on('error', () => {
+    console.log('Connect url ', connectUrl)
+})
+
 client.on('message', async (topic: any, payload: any) => {
     console.log('Received Message:', topic, payload.toString())
     sensorData = JSON.parse(payload.toString())
