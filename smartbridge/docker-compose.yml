@@ -1,10 +1,9 @@
-
 services:
   app:
     build: .
     container_name: smartbridge
     ports:
-      - "${NODE_PORT}:${NODE_PORT}"  # Dynamically use the PORT variable from the .env file
+      - "${NODE_PORT}:${NODE_PORT}"
     environment:
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
@@ -13,16 +12,14 @@ services:
       DB_NAME: ${DB_NAME}
     depends_on:
       - mosquitto
-        # condition: service_healthy
       - timescaledb
-        # condition: service_healthy
 
   timescaledb:
     image: timescale/timescaledb:latest-pg14
     container_name: timescaledb
     restart: unless-stopped
     ports:
-      - "5432:5432" # Expose PostgreSQL port
+      - "5432:5432"
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PWD}
@@ -41,10 +38,10 @@ services:
     container_name: grafana
     restart: unless-stopped
     ports:
-      - "${GRAFANA_PORT}:${GRAFANA_PORT}" # Grafana web interface
+      - "${GRAFANA_PORT}:${GRAFANA_PORT}"
     environment:
-      GF_SECURITY_ADMIN_USER: ${GF_USER}
-      GF_SECURITY_ADMIN_PASSWORD: ${GF_PWD}
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
     depends_on:
       timescaledb:
         condition: service_healthy

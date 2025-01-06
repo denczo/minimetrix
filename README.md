@@ -1,6 +1,7 @@
 # MiniMetrix
 
-MiniMetrix is a homesetup that collects data from IOT devices (e.g. Pi Zero or a smartsocket) and sends it via MQTT to a broker (Mosquitoo). A microservice saves this sensor data to a time-series database (TimescaleDB), which then is visualized through Grafana for real-time monitoring. The solution provides a seamless integration of IoT devices, data storage, and visualization in a user-friendly interface.
+MiniMetrix is a homesetup that collects data from IOT devices (e.g. Pi Zero or a smartsocket) and sends it via MQTT to a broker (Mosquitoo). A microservice saves this sensor data to a time-series database (TimescaleDB), which then is visualized through Grafana for real-time monitoring. The solution provides a seamless integration of IoT devices, data storage, and visualization in a user-friendly interface. [Live demo](http://www.unimatrixzero.eu:3000/public-dashboards/eb8215328d5a42899ad8604be2bb449b)
+
 
 <p align="center">
   <a href="https://skillicons.dev">
@@ -18,6 +19,14 @@ raspi_temp_humpidity.py reads temperatur and humidity from a DHT11 sensor which 
 - run raspi_temp_humpidity.py in the background: nohup python3 /path/to/raspi_temp_humpidity.py &
 - login to your server/VPS/Cloud, download the docker-compose.yml
 - create an .env file and set all the variables (see .env_template)
+- create a mosquitto.conf under `minimetrix/mosquitto/conf/` with the following:
+```
+persistence true
+persistence_location /mosquitto/data/
+log_dest file /mosquitto/log/mosquitto.log
+listener 1883 0.0.0.0
+allow_anonymous true
+```
 - run docker compose up
 - in Grafana:
     - create a new datasource and connect the timeseriesDB
