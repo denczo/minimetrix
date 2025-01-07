@@ -10,6 +10,7 @@ MiniMetrix is a homesetup that collects data from IOT devices (e.g. Pi Zero or a
 </p>
 
 ## Overview
+![](smartbridge/public/MiniMetrixDemo.webp?raw=true)
 ![](smartbridge/public/MiniMetrix.webp?raw=true)
 
 ## Setup
